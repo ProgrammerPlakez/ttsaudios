@@ -1,0 +1,24 @@
+
+
+# Quando o workflow será acionado
+on:
+  push:
+    branches:
+      - main  # Ou 'master', dependendo do seu repositório
+    paths:
+      - 'audios/*'  # O fluxo será ativado sempre que arquivos dentro da pasta 'audios/' forem alterados
+
+jobs:
+  upload_audio:
+    runs-on: ubuntu-latest  # O ambiente de execução
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2  # Baixa o código do repositório
+
+    - name: Upload audio to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages  # A branch onde os arquivos do GitHub Pages serão enviados
+        folder: audios    # Pasta contendo os arquivos de áudio
+        token: ${{ secrets.GITHUB_TOKEN }}  # O token de autenticação
